@@ -14,10 +14,10 @@ btnClear.addEventListener('click', clearItems)
 //Util Functions
 
 //add item to the list
-function addItem(e){
+function addItem(e) {
     e.preventDefault();
     //check the input
-    if(itemInput.value === ''){
+    if (itemInput.value === '') {
         alert('please insert an item')
         return;
     }
@@ -30,7 +30,7 @@ function addItem(e){
 
     //appand button to li element
     newItem.appendChild(deleteButton);
-    
+
     //append li to ul element
     itemList.appendChild(newItem);
 
@@ -38,7 +38,7 @@ function addItem(e){
     itemInput.value = '';
 }
 
-function createButton(classes){
+function createButton(classes) {
     const button = document.createElement('button');
     button.className = classes;
 
@@ -48,22 +48,24 @@ function createButton(classes){
     return button;
 }
 
-function createIcon(classes){
+function createIcon(classes) {
     const icon = document.createElement('i');
     icon.className = classes;
     return icon;
 }
 
 //remove spetific item from the list
-function removeItem(e){
+function removeItem(e) {
     //if the target of the event is the icon so his parent will be remove-item button -> whats mean the icon clicked.
-    if(e.target.parentElement.classList.contains('remove-item')){
-        //remove the parent of the parent of the ican -> the all li element
-        e.target.parentElement.parentElement.remove();
+    if (e.target.parentElement.classList.contains('remove-item')) {
+        if (window.confirm('Are you sure?')) {
+            //remove the parent of the parent of the ican -> the all li element
+            e.target.parentElement.parentElement.remove();
+        }
     }
 }
 
 //clear the all items from the list
-function clearItems(e){
+function clearItems(e) {
     itemList.innerHTML = '';
 }

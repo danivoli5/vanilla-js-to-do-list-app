@@ -3,12 +3,17 @@ const itemForm = document.getElementById('item-form');
 const itemInput = document.getElementById('item-input');
 const itemList = document.getElementById('item-list');
 const btnClear = document.getElementById('clear');
+const filter = document.getElementById('filter');
 
 
 //Event listeners
 itemForm.addEventListener('submit', addItem)
 itemList.addEventListener('click', removeItem)
 btnClear.addEventListener('click', clearItems)
+filter.addEventListener('input', filterItems)
+
+//check UI to init application starting state
+checkUI();
 
 
 //Util Functions
@@ -30,12 +35,14 @@ function addItem(e) {
 
     //appand button to li element
     newItem.appendChild(deleteButton);
-
     //append li to ul element
     itemList.appendChild(newItem);
 
     //clear the input text field
     itemInput.value = '';
+
+    //check UI
+    checkUI();
 }
 
 function createButton(classes) {
@@ -61,11 +68,46 @@ function removeItem(e) {
         if (window.confirm('Are you sure?')) {
             //remove the parent of the parent of the ican -> the all li element
             e.target.parentElement.parentElement.remove();
+            //check UI
+            checkUI();
         }
     }
 }
 
 //clear the all items from the list
 function clearItems(e) {
-    itemList.innerHTML = '';
+    if (window.confirm('Are you sure?')) {
+        itemList.innerHTML = '';
+        //check UI
+        checkUI();
+    }
+
+}
+
+//check if the item list in the UI is empty
+function checkUI() {
+    const items = document.querySelectorAll('li');
+    if (items.length == 0) {
+        filter.style.display = 'none';
+        btnClear.style.display = 'none';
+    } else {
+        filter.style.display = 'block';
+        btnClear.style.display = 'block';
+    }
+}
+
+//filter the list item
+function filterItems(e) {
+    const items = document.querySelectorAll('li');
+    const text = e.target.value.toLowerCase();
+
+    items.forEach((item) => {
+        //if equel to -1 it means that its not index of the string
+        if (item.textContent.toLowerCase().indexOf(text) != -1) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    })
+
 }

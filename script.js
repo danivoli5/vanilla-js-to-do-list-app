@@ -47,6 +47,11 @@ function addItem(e) {
         //isEditmode change to false in checkUI call
     }
 
+    if (checkIfItemExist(itemText)) {
+        alert('Item exist!')
+        return;
+    }
+
 
     addItemToDOM(itemText);
     addItemToStorage(itemText);
@@ -213,4 +218,9 @@ function loadItemsFromSotorage() {
 
     //add to DOM each item
     itemsFromStorage.forEach((item) => addItemToDOM(item));
+}
+
+function checkIfItemExist(itemText) {
+    const itemsFromStorage = checkItemsSotrage();
+    return itemsFromStorage.includes(itemText);
 }
